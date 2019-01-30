@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 
-const area = sequelize.define('Supplier_Users', {
+const suppUsers = sequelize.define('Supplier_Users', {
   timestamp: {
     type: 'TIMESTAMP',
     allowNull: false
@@ -25,8 +25,10 @@ const area = sequelize.define('Supplier_Users', {
   StartDate: Sequelize.DATEONLY,
   EndDate: Sequelize.DATEONLY,
 }, {
+  schema: 'dbo',
+  tableName: 'Supplier_Users',
   timestamps: false,
   freezeTableName: true,
 });
 
-module.exports = area;
+module.exports = suppUsers;
