@@ -13,7 +13,6 @@ router.get('/:page', async (req, res) => {
   let page = req.params.page;      // page number
   let pages = Math.ceil(data.count / limit);
   offset = limit * (page - 1);
-  console.log('>>>',pages);
 
   const users = await Users.findAll({
     attributes: {exclude: ['timestamp']},
