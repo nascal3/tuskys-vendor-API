@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const SuppUsers = require('../models/users');
+const SuppUsers = require('../models/suppUsers');
 require('express-async-errors');
 
 /* GET users listing. */
 router.get('/:page', async (req, res) => {
 
   let limit = 50;   // number of records per page
-  let offset = 0;
+  let offset;
 
   const data = await SuppUsers.findAndCountAll();
-  let page = req.params.page;      // page number
+  let page = parseInt(req.params.page);      // page number
+  page <= 0 ? page = 1 : page = parseInt(req.params.page);
   let pages = Math.ceil(data.count / limit);
   offset = limit * (page - 1);
 
