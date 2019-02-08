@@ -181,7 +181,7 @@ const VendorLedgEntry = sequelize.define('VendorLedgEntry', {
   }
 }, {
   schema: 'dbo',
-  tableName: 'Tusker Mattresses Ltd$Detailed Vendor Ledg_ Entry',
+  tableName: 'WEB$Detailed Vendor Ledg_ Entry',
   timestamps: false,
   freezeTableName: true,
 });

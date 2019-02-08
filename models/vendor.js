@@ -242,7 +242,7 @@ const Vendor = sequelize.define('vendor', {
   },
   Prepayment_percent: {
     type: Sequelize.DECIMAL,
-    field: '"Prepayment %"',
+    field: 'Prepayment %',
     allowNull: false
   },
   Primary_Contact_No: {
@@ -346,7 +346,7 @@ const Vendor = sequelize.define('vendor', {
   }
 }, {
   schema: 'dbo',
-  tableName: 'Tusker Mattresses Ltd$Vendor',
+  tableName: 'WEB$Vendor',
   timestamps: false,
   freezeTableName: true,
 });

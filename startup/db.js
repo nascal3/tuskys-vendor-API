@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
     config.get('password'),
     {
       dialect: 'mssql',
-      host: '197.248.7.175',
+      host: '192.168.150.163',
       dialectOptions: {
         encrypt: true
       },
