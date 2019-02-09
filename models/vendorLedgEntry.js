@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
+const config = require('config');
 
 const VendorLedgEntry = sequelize.define('VendorLedgEntry', {
   timestamp: {
@@ -181,7 +182,7 @@ const VendorLedgEntry = sequelize.define('VendorLedgEntry', {
   }
 }, {
   schema: 'dbo',
-  tableName: 'WEB$Detailed Vendor Ledg_ Entry',
+  tableName: config.get('pre_database')+'Detailed Vendor Ledg_ Entry',
   timestamps: false,
   freezeTableName: true,
 });
