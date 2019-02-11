@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 const config = require('config');
 
-const Item = sequelize.define('Item', {
+const Store = sequelize.define('Store', {
   timestamp: {
     type: 'TIMESTAMP',
     allowNull: false
@@ -842,7 +842,7 @@ const Item = sequelize.define('Item', {
   },
   Store_Stock_Cover_Reqd_Days: {
     type: Sequelize.DECIMAL,
-    field: '"Store Stock Cover Reqd (Days)"',
+    field: '"StoreModel Stock Cover Reqd (Days)"',
     allowNull: false
   },
   Wareh_Stock_Cover_Reqd_Days: {
@@ -892,7 +892,7 @@ const Item = sequelize.define('Item', {
   },
   Store_Forward_Sales_Profile: {
     type: Sequelize.STRING(10),
-    field: 'Store Forward Sales Profile',
+    field: 'StoreModel Forward Sales Profile',
     allowNull: false
   },
   Wareh_Forward_Sales_Profile: {
@@ -1259,9 +1259,9 @@ const Item = sequelize.define('Item', {
   }
 }, {
   schema: 'dbo',
-  tableName: config.get('pre_database')+'Item',
+  tableName: config.get('pre_database')+'Store',
   timestamps: false,
   freezeTableName: true,
 });
 
-module.exports = Item;
+module.exports = Store;

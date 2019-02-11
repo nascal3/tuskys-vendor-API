@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 const config = require('config');
 
-const Vendor = sequelize.define('vendor', {
+const VendorModel = sequelize.define('vendor', {
   timestamp: {
     type: 'TIMESTAMP',
     allowNull: false
@@ -352,4 +352,4 @@ const Vendor = sequelize.define('vendor', {
   freezeTableName: true,
 });
 
-module.exports = Vendor;
+module.exports = VendorModel;

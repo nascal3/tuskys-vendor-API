@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 
-const suppUsers = sequelize.define('Supplier_Users', {
+const suppUsersModel = sequelize.define('Supplier_Users', {
   timestamp: {
     type: 'TIMESTAMP',
     allowNull: false
@@ -31,4 +31,4 @@ const suppUsers = sequelize.define('Supplier_Users', {
   freezeTableName: true,
 });
 
-module.exports = suppUsers;
+module.exports = suppUsersModel;

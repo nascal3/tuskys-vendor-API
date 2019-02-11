@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const SuppUsers = require('../models/suppUsers');
-const VendorLedgEntry = require('../models/vendorLedgEntry');
+const SuppUsers = require('../models/suppUsersModel');
+const VendorLedgEntry = require('../models/vendorLedgEntryModel');
 require('express-async-errors');
 
 /* GET users listing. */

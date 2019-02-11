@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 const config = require('config');
 
-const TransSalesEntry = sequelize.define('TransSalesEntry', {
+const TransSalesEntryModel = sequelize.define('TransSalesEntry', {
   timestamp: {
     type: 'TIMESTAMP',
     allowNull: false
@@ -415,4 +415,4 @@ const TransSalesEntry = sequelize.define('TransSalesEntry', {
   freezeTableName: true,
 });
 
-module.exports = TransSalesEntry;
+module.exports = TransSalesEntryModel;
