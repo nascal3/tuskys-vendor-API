@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 const config = require('config');
 
-const TenderTypeSetupModel = sequelize.define('TenderTypeSetup', {
+const tenderTypeSetupModel = sequelize.define('Tender_Type_Setup', {
   timestamp: {
     type: 'TIMESTAMP',
     allowNull: false
@@ -28,4 +28,4 @@ const TenderTypeSetupModel = sequelize.define('TenderTypeSetup', {
   freezeTableName: true,
 });
 
-module.exports = TenderTypeSetupModel;
+module.exports = tenderTypeSetupModel;

@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 const config = require('config');
 
-const StoreModel = sequelize.define('Store', {
+const storeModel = sequelize.define('Store', {
   timestamp: {
     type: 'TIMESTAMP',
     allowNull: false
@@ -495,4 +495,4 @@ const StoreModel = sequelize.define('Store', {
   freezeTableName: true,
 });
 
-module.exports = StoreModel;
+module.exports = storeModel;

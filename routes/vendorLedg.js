@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const VendorLedgEntry = require('../models/vendorLedgEntryModel')
-const Vendor = require('../models/vendorModel');
+const VendorLedgEntry = require('../models/VendorLedgEntryModel');
+const Vendor = require('../models/VendorModel');
 require('express-async-errors');
 
 router.get('/:page', async (req, res) => {
