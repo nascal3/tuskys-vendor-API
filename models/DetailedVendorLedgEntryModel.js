@@ -13,6 +13,11 @@ const detailedVendorLedgEntryModel = sequelize.define('Detailed_Vendor_Ledg_Entr
     primaryKey: true,
     allowNull: false
   },
+  Vendor_Ledger_Entry_No: {
+    type: Sequelize.INTEGER,
+    field: 'Vendor Ledger Entry No_',
+    allowNull: false
+  },
   Entry_Type: {
     type: Sequelize.INTEGER,
     field: 'Entry Type',
