@@ -11,7 +11,7 @@ require('./startup/routes')(app);
 // CREATE TABLES IF THEY DON'T EXIST
 let server = null;
 sequelize.sync().then(result => {
-  const port = process.env.PORT || 8080;
+  const port = process.env.PORT || 8181;
   server = app.listen( port, console.log(`listening to port ${port}`));
 }).catch( err => {
   console.error('Error occurred: ',err.name);
