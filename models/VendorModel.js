@@ -370,6 +370,7 @@ itemModel.hasMany(vendorModel, {
 
 vendorModel.belongsTo(itemModel, {
   foreignKey: 'No',
+  as: 'Stock_Items',
   targetKey: 'Vendor_No'
 });
 
