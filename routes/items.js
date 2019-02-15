@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const VendorLedgEntry = require('../models/VendorLedgEntryModel');
 const ItemModel = require('../models/ItemModel');
-const Vendor = require('../models/VendorModel');
+const TransSalesEntryModel = require('../models/TransSalesEntryModel');
 require('express-async-errors');
 
-// GET ALL VENDORS WITH THEIR LEDGER ENTRIES AND ITEMS
+// GET ALL ITEMS WITH THEIR SALES TRANSACTIONS
 router.get('/:page', async (req, res) => {
 
   let limit = 50;   // number of records per page
@@ -15,12 +14,10 @@ router.get('/:page', async (req, res) => {
   page <= 0 ? page = 1 : page = parseInt(req.params.page);
   offset = limit * (page - 1);
 
-  const vendors = await Vendor.findAll({
+  const items = await ItemModel.findAll({
     include: [{
-      model:VendorLedgEntry,
-      attributes: {exclude: ['timestamp']}
-    },{
-      model: ItemModel,
+      model:TransSalesEntryModel,
+      as: 'Sales',
       attributes: {exclude: ['timestamp']}
     }],
     attributes: {exclude: ['timestamp']},
@@ -28,7 +25,7 @@ router.get('/:page', async (req, res) => {
     offset: offset
   });
 
-  res.status(200).json({'result': vendors});
+  res.status(200).json({'result': items});
 });
 
 module.exports = router;
