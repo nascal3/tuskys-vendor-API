@@ -44,12 +44,12 @@ const vendorLedgEntryModel = sequelize.define('Vendor_Ledger_Entry', {
   },
   Purchase_LCY: {
     type: Sequelize.DECIMAL,
-    field: '"Purchase (LCY)"',
+    field: "'Purchase (LCY)'",
     allowNull: false
   },
   Inv_Discount_LCY: {
     type: Sequelize.DECIMAL,
-    field: '"Inv_ Discount (LCY)"',
+    field: "'Inv_ Discount (LCY)'",
     allowNull: false
   },
   Buy_From_Vendor_No: {
@@ -123,7 +123,7 @@ const vendorLedgEntryModel = sequelize.define('Vendor_Ledger_Entry', {
   },
   Pmt_Disc_Rcd_LCY: {
     type: Sequelize.DECIMAL,
-    field: '"Pmt_ Disc_ Rcd_(LCY)"',
+    field: "'Pmt_ Disc_ Rcd_(LCY)'",
     allowNull: false
   },
   Positive: {
@@ -177,7 +177,7 @@ const vendorLedgEntryModel = sequelize.define('Vendor_Ledger_Entry', {
   },
   Closed_By_Amount_LCY: {
     type: Sequelize.DECIMAL,
-    field: '"Closed by Amount (LCY)"',
+    field: "'Closed by Amount (LCY)'",
     allowNull: false
   },
   Document_Date: {
@@ -242,7 +242,7 @@ const vendorLedgEntryModel = sequelize.define('Vendor_Ledger_Entry', {
   },
   Pmt_Tolerance_LCY: {
     type: Sequelize.DECIMAL,
-    field: '"Pmt_ Tolerance (LCY)"',
+    field: "'Pmt_ Tolerance (LCY)'",
     allowNull: false
   },
   Amount_To_Apply: {
