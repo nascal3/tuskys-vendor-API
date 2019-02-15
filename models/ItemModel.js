@@ -807,7 +807,7 @@ const itemModel = sequelize.define('Item', {
   },
   Production_Time_Min: {
     type: Sequelize.INTEGER,
-    field: '"Production Time (Min_)"',
+    field: "'Production Time (Min_)'",
     allowNull: false
   },
   Recipe_Main_Ingredient: {
@@ -842,12 +842,12 @@ const itemModel = sequelize.define('Item', {
   },
   Store_Stock_Cover_Reqd_Days: {
     type: Sequelize.DECIMAL,
-    field: '"Store Stock Cover Reqd (Days)"',
+    field: "'Store Stock Cover Reqd (Days)'",
     allowNull: false
   },
   Wareh_Stock_Cover_Reqd_Days: {
     type: Sequelize.DECIMAL,
-    field: '"Wareh Stock Cover Reqd (Days)"',
+    field: "'Wareh Stock Cover Reqd (Days)'",
     allowNull: false
   },
   Replenishment_Sales_Profile: {
@@ -882,7 +882,7 @@ const itemModel = sequelize.define('Item', {
   },
   Transfer_Multiple: {
     type: Sequelize.DECIMAL,
-    field: 'Transfer_Multiple',
+    field: 'Transfer Multiple',
     allowNull: false
   },
   Range_In_Location: {
