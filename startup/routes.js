@@ -1,9 +1,11 @@
 const express = require('express');
 const suppUsers = require('../routes/suppUsers');
-const vendorLedg = require('../routes/vendorLedg');
+const vendor = require('../routes/vendor');
+const items = require('../routes/items');
 
 module.exports = function (app) {
   app.use(express.json());
   app.use('/api/suppliers', suppUsers);
-  app.use('/api/vendor', vendorLedg);
+  app.use('/api/vendor', vendor);
+  app.use('/api/items',items );
 };
