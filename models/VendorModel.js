@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
+const vendorLedgEntryModel = require('./VendorLedgEntryModel');
 const config = require('config');
 
 const vendorModel = sequelize.define('vendor', {
@@ -11,7 +12,11 @@ const vendorModel = sequelize.define('vendor', {
     type:Sequelize.INTEGER,
     field: 'No_',
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: vendorLedgEntryModel,
+      key: vendorLedgEntryModel.Vendor_No
+    }
   },
   Name: {
     type: Sequelize.STRING(50),
@@ -350,6 +355,13 @@ const vendorModel = sequelize.define('vendor', {
   tableName: config.get('pre_database')+'Vendor',
   timestamps: false,
   freezeTableName: true,
+});
+
+vendorModel.belongsTo(vendorLedgEntryModel, {
+  foreignKey: 'No'
+});
+vendorLedgEntryModel.hasMany(vendorModel, {
+  foreignKey: 'No'
 });
 
 module.exports = vendorModel;

@@ -14,6 +14,7 @@ router.get('/:page', async (req, res) => {
   offset = limit * (page - 1);
 
   const users = await Vendor.findAll({
+    include: [VendorLedgEntry],
     attributes: {exclude: ['timestamp']},
     limit: limit,
     offset: offset
