@@ -249,7 +249,7 @@ const itemModel = sequelize.define('Item', {
   },
   VAT_Bus_Posting_Gr_Price: {
     type: Sequelize.STRING(10),
-    field: '"VAT Bus_ Posting Gr_ (Price)"',
+    field: "[VAT Bus_ Posting Gr_ (Price)]",
     allowNull: false
   },
   Gen_Prod_Posting_Group: {
@@ -808,7 +808,7 @@ const itemModel = sequelize.define('Item', {
   },
   Production_Time_Min: {
     type: Sequelize.INTEGER,
-    field: '"Production Time (Min_)"',
+    field: "[Production Time (Min_)]",
     allowNull: false
   },
   Recipe_Main_Ingredient: {
@@ -843,12 +843,12 @@ const itemModel = sequelize.define('Item', {
   },
   Store_Stock_Cover_Reqd_Days: {
     type: Sequelize.DECIMAL,
-    field: '"Store Stock Cover Reqd (Days)"',
+    field: "[Store Stock Cover Reqd (Days)]",
     allowNull: false
   },
   Wareh_Stock_Cover_Reqd_Days: {
     type: Sequelize.DECIMAL,
-    field: '"Wareh Stock Cover Reqd (Days)"',
+    field: "[Wareh Stock Cover Reqd (Days)]",
     allowNull: false
   },
   Replenishment_Sales_Profile: {
