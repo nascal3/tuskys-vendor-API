@@ -1266,12 +1266,12 @@ const itemModel = sequelize.define('Item', {
 });
 
 transSalesEntryModel.hasMany(itemModel, {
-  foreignKey: 'Vendor_Item_No',
+  foreignKey: 'No',
   sourceKey: 'Item_No'
 });
 
 itemModel.belongsTo(transSalesEntryModel, {
-  foreignKey: 'Vendor_Item_No',
+  foreignKey: 'No',
   as: 'Sales',
   targetKey: 'Item_No'
 });
