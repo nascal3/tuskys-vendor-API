@@ -63,7 +63,7 @@ const itemModel = sequelize.define('Item', {
     allowNull: false
   },
   Last_Date_Modified: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     field: 'Last Date Modified',
     allowNull: false
   },

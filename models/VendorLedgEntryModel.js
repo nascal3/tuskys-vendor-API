@@ -39,12 +39,12 @@ const vendorLedgEntryModel = sequelize.define('Vendor_Ledger_Entry', {
   },
   Purchase_LCY: {
     type: Sequelize.DECIMAL,
-    field: "'Purchase (LCY)'",
+    field: "[Purchase (LCY)]",
     allowNull: false
   },
   Inv_Discount_LCY: {
     type: Sequelize.DECIMAL,
-    field: "'Inv_ Discount (LCY)'",
+    field: "[Inv_ Discount (LCY)]",
     allowNull: false
   },
   Buy_From_Vendor_No: {
@@ -83,12 +83,17 @@ const vendorLedgEntryModel = sequelize.define('Vendor_Ledger_Entry', {
   },
   Pmt_Disc_Rcd_LCY: {
     type: Sequelize.DECIMAL,
-    field: "'Pmt_ Disc_ Rcd_(LCY)'",
+    field: "[Pmt_ Disc_ Rcd_(LCY)]",
     allowNull: false
   },
   Closed_At_Date: {
     type: Sequelize.DATEONLY,
     field: 'Closed at Date',
+    allowNull: false
+  },
+  Closed_By_Amount: {
+    type: Sequelize.DECIMAL,
+    field: 'Closed by Amount',
     allowNull: false
   },
   Bal_Account_No: {
