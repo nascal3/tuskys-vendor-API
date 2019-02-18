@@ -24,11 +24,6 @@ const vendorModel = sequelize.define('vendor', {
     field: 'Search Name',
     allowNull: false
   },
-  Name_2: {
-    type: Sequelize.STRING(50),
-    field: 'Name 2',
-    allowNull: false
-  },
   Address: {
     type: Sequelize.STRING(50),
     allowNull: false
@@ -62,21 +57,6 @@ const vendorModel = sequelize.define('vendor', {
     field: 'Our Account No_',
     allowNull: false
   },
-  Territory_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Territory Code',
-    allowNull: false
-  },
-  Global_Dimension_1_Code: {
-    type: Sequelize.STRING(20),
-    field: 'Global Dimension 1 Code',
-    allowNull: false
-  },
-  Global_Dimension_2_Code: {
-    type: Sequelize.STRING(20),
-    field: 'Global Dimension 2 Code',
-    allowNull: false
-  },
   Budgeted_Amount: {
     type: Sequelize.DECIMAL,
     field: 'Budgeted Amount',
@@ -87,44 +67,14 @@ const vendorModel = sequelize.define('vendor', {
     field: 'Vendor Posting Group',
     allowNull: false
   },
-  Currency_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Currency Code',
-    allowNull: false
-  },
-  Language_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Language Code',
-    allowNull: false
-  },
-  Statistics_Group: {
-    type: Sequelize.INTEGER,
-    field: 'Statistics Group',
-    allowNull: false
-  },
   Payment_Term_Code: {
     type: Sequelize.STRING(10),
     field: 'Payment Terms Code',
     allowNull: false
   },
-  Fin_Charge_Terms_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Fin_ Charge Terms Code',
-    allowNull: false
-  },
-  Purchaser_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Purchaser Code',
-    allowNull: false
-  },
   Shipment_Method_Code: {
     type: Sequelize.STRING(10),
     field: 'Shipment Method Code',
-    allowNull: false
-  },
-  Shipping_Agent_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Shipping Agent Code',
     allowNull: false
   },
   Invoice_Disc_Code: {
@@ -160,24 +110,9 @@ const vendorModel = sequelize.define('vendor', {
     field: 'Last Date Modified',
     allowNull: false
   },
-  Application_Method: {
-    type: Sequelize.INTEGER,
-    field: 'Application Method',
-    allowNull: false
-  },
-  Prices_Including_VAT: {
-    type: Sequelize.BOOLEAN,
-    field: 'Prices Including VAT',
-    allowNull: false
-  },
   Fax_No: {
     type: Sequelize.STRING(30),
     field: 'Fax No_',
-    allowNull: false
-  },
-  Telex_Answer_Back: {
-    type: Sequelize.STRING(20),
-    field: 'Telex Answer Back',
     allowNull: false
   },
   VAT_Registration_No: {
@@ -189,10 +124,6 @@ const vendorModel = sequelize.define('vendor', {
     type: Sequelize.STRING(10),
     field: 'Gen_ Bus_ Posting Group',
     allowNull: false
-  },
-  Picture: {
-    type:Sequelize.BLOB,
-    allowNull: true
   },
   Post_Code: {
     type: Sequelize.STRING(20),
@@ -213,16 +144,6 @@ const vendorModel = sequelize.define('vendor', {
     field: 'Home Page',
     allowNull: false
   },
-  No_Series: {
-    type: Sequelize.STRING(10),
-    field: 'No_ Series',
-    allowNull: false
-  },
-  Tax_Area_Code: {
-    type: Sequelize.STRING(20),
-    field: 'Tax Area Code',
-    allowNull: false
-  },
   Tax_Liable: {
     type: Sequelize.BOOLEAN,
     field: 'Tax Liable',
@@ -231,56 +152,6 @@ const vendorModel = sequelize.define('vendor', {
   VAT_Bus_Posting_Group: {
     type: Sequelize.STRING(10),
     field: 'VAT Bus_ Posting Group',
-    allowNull: false
-  },
-  Block_Payment_Tolerance: {
-    type: Sequelize.BOOLEAN,
-    field: 'Block Payment Tolerance',
-    allowNull: false
-  },
-  IC_Partner_Code: {
-    type: Sequelize.STRING(20),
-    field: 'IC Partner Code',
-    allowNull: false
-  },
-  Prepayment_percent: {
-    type: Sequelize.DECIMAL,
-    field: 'Prepayment %',
-    allowNull: false
-  },
-  Primary_Contact_No: {
-    type: Sequelize.STRING(20),
-    field: 'Primary Contact No_',
-    allowNull: false
-  },
-  Responsibility_Center: {
-    type: Sequelize.STRING(10),
-    field: 'Responsibility Center',
-    allowNull: false
-  },
-  Location_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Location Code',
-    allowNull: false
-  },
-  Lead_Time_Calculation: {
-    type: Sequelize.STRING(32),
-    field: 'Lead Time Calculation',
-    allowNull: false
-  },
-  Last_Statement_No: {
-    type: Sequelize.INTEGER,
-    field: 'Last Statement No_',
-    allowNull: false
-  },
-  Print_Statements: {
-    type: Sequelize.BOOLEAN,
-    field: 'Print Statements',
-    allowNull: false
-  },
-  DIT_No: {
-    type: Sequelize.STRING(20),
-    field: 'DIT No_',
     allowNull: false
   },
   DOHS: {
@@ -300,41 +171,6 @@ const vendorModel = sequelize.define('vendor', {
   Supply_to_Vendor: {
     type: Sequelize.STRING(30),
     field: 'Supply to Vendor',
-    allowNull: false
-  },
-  RTC_Filter_Field: {
-    type: Sequelize.INTEGER,
-    field: 'RTC Filter Field',
-    allowNull: false
-  },
-  Buyer_Group_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Buyer Group Code',
-    allowNull: false
-  },
-  Buyer_ID: {
-    type: Sequelize.STRING(20),
-    field: 'Buyer ID',
-    allowNull: false
-  },
-  Liq_Payment_Terms_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Liq_ Payment Terms Code',
-    allowNull: false
-  },
-  Quote_Validity_Period: {
-    type: Sequelize.STRING(32),
-    field: 'Quote Validity Period',
-    allowNull: false
-  },
-  Medical_Practitioner: {
-    type: Sequelize.BOOLEAN,
-    field: 'Medical Practitioner',
-    allowNull: false
-  },
-  Training_Service_Provider: {
-    type: Sequelize.BOOLEAN,
-    field: 'Training Service Provider',
     allowNull: false
   },
   Active_Contract_Amount: {
