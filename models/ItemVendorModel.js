@@ -24,15 +24,6 @@ const itemVendorModel = sequelize.define('Item_Vendor', {
     field: 'Variant Code',
     primaryKey: true,
     allowNull: false
-  },
-  Lead_Time_Calculation: {
-    type: Sequelize.STRING(32),
-    field: 'Lead Time Calculation',
-    allowNull: false
-  },
-  Priority: {
-    type: Sequelize.INTEGER,
-    allowNull: false
   }
 }, {
   schema: 'dbo',
