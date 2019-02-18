@@ -31,7 +31,7 @@ router.get('/:page', async (req, res) => {
 // GET AN ITEM WITH THE ITEM NUMBER
 router.get('/item/:itemNum/:page', async (req, res) => {
 
-  let limit = 10;   // number of records per page
+  let limit = 50;   // number of records per page
   let offset;
 
   let page = parseInt(req.params.page);      // page number
@@ -42,6 +42,8 @@ router.get('/item/:itemNum/:page', async (req, res) => {
     order: [
       [{model:TransSalesEntryModel, as: 'Sales'}, 'Transaction_No', 'DESC']
     ],
+    limit: limit,
+    offset: offset,
 
     include: [{
       model:TransSalesEntryModel,
