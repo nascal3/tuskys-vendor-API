@@ -58,11 +58,6 @@ const itemModel = sequelize.define('Item', {
     field: 'Vendor No_',
     allowNull: false
   },
-  Vendor_Item_No: {
-    type: Sequelize.STRING(20),
-    field: 'Vendor Item No_',
-    allowNull: false
-  },
   Blocked: {
     type: Sequelize.INTEGER,
     allowNull: false
