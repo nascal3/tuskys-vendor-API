@@ -4,7 +4,7 @@ const ItemModel = require('../models/ItemModel');
 const TransSalesEntryModel = require('../models/TransSalesEntryModel');
 require('express-async-errors');
 
-// GET ALL ITEMS WITH THEIR SALES TRANSACTIONS
+// GET ALL ITEMS
 router.get('/:page', async (req, res) => {
 
   let limit = 50;   // number of records per page
@@ -15,11 +15,6 @@ router.get('/:page', async (req, res) => {
   offset = limit * (page - 1);
 
   const items = await ItemModel.findAll({
-    include: [{
-      model:TransSalesEntryModel,
-      as: 'Sales',
-      attributes: {exclude: ['timestamp']}
-    }],
     attributes: {exclude: ['timestamp']},
     limit: limit,
     offset: offset
@@ -31,7 +26,7 @@ router.get('/:page', async (req, res) => {
 // GET AN ITEM WITH THE ITEM NUMBER
 router.get('/item/:itemNum/:page', async (req, res) => {
 
-  let limit = 50;   // number of records per page
+  let limit = 25;   // number of records per page
   let offset;
 
   let page = parseInt(req.params.page);      // page number
