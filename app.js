@@ -14,7 +14,7 @@ sequelize.sync().then(result => {
   const port = process.env.PORT || 8181;
   server = app.listen( port, console.log(`listening to port ${port}`));
 }).catch( err => {
-  console.error('Error occurred: ',err.name, 'Message: ',err.message);
+  console.error('Error occurred: ',err.name, '<===> Message: ',err.message);
 });
 
 module.exports = server;
