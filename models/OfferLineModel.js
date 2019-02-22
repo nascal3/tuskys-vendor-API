@@ -19,11 +19,6 @@ const offerLineModel = sequelize.define('Offer_Line', {
     primaryKey: true,
     allowNull: false
   },
-  xStatus: {
-    type: Sequelize.INTEGER,
-    field: 'xStatus',
-    allowNull: false
-  },
   Type: {
     type: Sequelize.INTEGER,
     allowNull: false
@@ -72,63 +67,9 @@ const offerLineModel = sequelize.define('Offer_Line', {
     field: 'Discount Amount Including VAT',
     allowNull: false
   },
-  Primary_Key: {
-    type: Sequelize.STRING(35),
-    field: 'Primary Key',
-    allowNull: false
-  },
-  Disable_Periodic_Discount: {
-    type: Sequelize.INTEGER,
-    field: 'Disable Periodic Discount',
-    allowNull: false
-  },
-  Currency_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Currency Code',
-    allowNull: false
-  },
-  Unit_Of_Measure: {
-    type: Sequelize.STRING,
-    field: 'Unit of Measure',
-    allowNull: false
-  },
-  Variant_Code: {
-    type: Sequelize.STRING(10),
-    field: 'Variant Code',
-    allowNull: false
-  },
-  Quantity: {
-    type: Sequelize.DECIMAL,
-    allowNull: false
-  },
   Display_Prompt: {
     type: Sequelize.STRING(30),
     field: 'Display Prompt',
-    allowNull: false
-  },
-  Min_Selection: {
-    type: Sequelize.INTEGER,
-    field: 'Min_ Selection',
-    allowNull: false
-  },
-  Max_Selection: {
-    type: Sequelize.INTEGER,
-    field: 'Max_ Selection',
-    allowNull: false
-  },
-  Selected_Deal_Line_No: {
-    type: Sequelize.INTEGER,
-    field: 'Selected Deal Line No_',
-    allowNull: false
-  },
-  Multiple_Selection: {
-    type: Sequelize.INTEGER,
-    field: 'Multiple Selection',
-    allowNull: false
-  },
-  Selected_Modifier_Line_No: {
-    type: Sequelize.INTEGER,
-    field: 'Selected Modifier Line No_',
     allowNull: false
   }
 }, {

@@ -44,7 +44,7 @@ const detailedVendorLedgEntryModel = sequelize.define('Detailed_Vendor_Ledg_Entr
   },
   Amount_LCY: {
     type: Sequelize.DECIMAL,
-    field: '"Amount (LCY)"',
+    field: "[Amount (LCY)]",
     allowNull: false
   },
   Vendor_No: {
@@ -74,12 +74,12 @@ const detailedVendorLedgEntryModel = sequelize.define('Detailed_Vendor_Ledg_Entr
   },
   Debit_Amount_LCY: {
     type: Sequelize.INTEGER,
-    field: '"Debit Amount (LCY)"',
+    field: "[Debit Amount (LCY)]",
     allowNull: false
   },
   Credit_Amount_LCY: {
     type: Sequelize.INTEGER,
-    field: '"Credit Amount (LCY)"',
+    field: "[Credit Amount (LCY)]",
     allowNull: false
   }
 }, {
