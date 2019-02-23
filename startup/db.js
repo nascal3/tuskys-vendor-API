@@ -9,7 +9,8 @@ const sequelize = new Sequelize(
       dialect: 'mssql',
       host: '192.168.150.163',
       dialectOptions: {
-        encrypt: true
+        encrypt: true,
+        requestTimeout: 30000
       },
       operatorsAliases: false
     }
