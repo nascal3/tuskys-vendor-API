@@ -4,7 +4,7 @@ const Vendor = require('../models/VendorModel');
 require('express-async-errors');
 
 // GET ALL VENDORS
-router.get('/:page', async (req, res) => {
+router.get('/list/:page', async (req, res) => {
 
   let limit = 50;   // number of records per page
   let offset;
@@ -20,6 +20,17 @@ router.get('/:page', async (req, res) => {
   });
 
   res.status(200).json({'result': vendors});
+});
+
+// GET ALL VENDOR BY VENDOR NUMBER
+router.get('/:num', async (req, res) => {
+
+  const vendor = await Vendor.findOne({
+    where: { No: req.params.num },
+    attributes: {exclude: ['timestamp']}
+  });
+
+  res.status(200).json({'result': vendor});
 });
 
 module.exports = router;
