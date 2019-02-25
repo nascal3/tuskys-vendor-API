@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const storage = require('node-persist');
+const auth = require('../middleware/auth');
 const ItemModel = require('../models/ItemModel');
 const TransSalesEntryModel = require('../models/TransSalesEntryModel');
 require('express-async-errors');
 
 // GET ALL ITEMS
-router.get('/:page', async (req, res) => {
+router.get('/:page', auth, async (req, res) => {
 
   let limit = 50;   // number of records per page
   let offset;
@@ -71,7 +72,7 @@ const getTrans = async (itemNum, page) => {
 };
 
 // GET AN ITEM WITH THE ITEM NUMBER
-router.get('/item/:itemNum/:page', async (req, res) => {
+router.get('/item/:itemNum/:page', auth, async (req, res) => {
 
   let itemNumber = req.params.itemNum;
   let pageNumber = req.params.page;
