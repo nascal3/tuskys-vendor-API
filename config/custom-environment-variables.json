@@ -2,5 +2,6 @@
   "database": "database",
   "user": "user",
   "password": "password",
-  "pre_database": "pre_database"
+  "pre_database": "pre_database",
+  "jwtPrivateKey": "jwtPrivateKey"
 }
