@@ -28,7 +28,7 @@ router.get('/list/:page', auth, async (req, res) => {
 });
 
 // LOGIN USERS PROCESS
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
 
