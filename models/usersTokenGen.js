@@ -1,8 +1,16 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-const generateAuthToken = (id, first_name, role, email) => {
-   return jwt.sign({id: id, first_name: first_name, role: role, email: email}, config.get('jwtPrivateKey') );
+const generateAuthToken = (id, vendorNo, fullName, email, phone, level) => {
+   return jwt.sign({
+      id: id,
+      vendorNo: vendorNo,
+      fullName: fullName,
+      email: email,
+      phone: phone,
+      level: level
+   },
+       config.get('jwtPrivateKey') );
 };
 
 module.exports = generateAuthToken;
