@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const storage = require('node-persist');
 const ItemModel = require('../models/ItemModel');
 const TransSalesEntryModel = require('../models/TransSalesEntryModel');
 require('express-async-errors');
@@ -26,17 +27,37 @@ router.get('/:page', async (req, res) => {
 // FUNCTION - GET TRANSACTIONS FOR SPECIFIC ITEM NUMBER
 const getTrans = async (itemNum, page) => {
 
+  await storage.init(); // initialize state storage
+
   let limit = 50;   // number of records per page
   let offset;
+  let pages = 0 || await storage.getItem('numOfPages');
 
-  const data = await TransSalesEntryModel.findAndCountAll({
-    where: {Item_No: itemNum}
-  });
+  // count all the records from DB
+  let data = [];
+  if (await storage.getItem('ItemNumber') === undefined) {
+    // --> create storage & set item number & pages into storage
+    data = await TransSalesEntryModel.findAndCountAll({
+      where: {Item_No: itemNum}
+    });
+    pages = Math.ceil(data.count / limit);
+    await storage.setItem('ItemNumber',itemNum);
+    await storage.setItem('numOfPages',pages);
+
+  } else if (await storage.getItem('ItemNumber') !== itemNum) {
+    // --> set item number & pages into storage if different item is requested
+    data = await TransSalesEntryModel.findAndCountAll({
+      where: {Item_No: itemNum}
+    });
+
+    pages = Math.ceil(data.count / limit);
+    await storage.setItem('ItemNumber',itemNum);
+    await storage.setItem('numOfPages',pages);
+  }
+
   let pageNum = parseInt(page);      // page number
   pageNum <= 0 ? pageNum = 1 : pageNum = parseInt(page);
-  let pages = Math.ceil(data.count / limit);
   offset = limit * (pageNum - 1);
-  console.log('>>>', pages);
 
   let trans = await TransSalesEntryModel.findAll({
     attributes: {exclude: ['timestamp']},
