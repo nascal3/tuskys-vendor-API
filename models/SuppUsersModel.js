@@ -9,13 +9,29 @@ const suppUsersModel = sequelize.define('Supplier_Users', {
   Vendor_No: {
     type:Sequelize.STRING(50),
     field: 'Vendor No',
+    allowNull: false
   },
-  Fullname: Sequelize.STRING(50),
-  Email: Sequelize.STRING(50),
+  Fullname: {
+    type:Sequelize.STRING(50),
+    allowNull: false
+  },
+  Email: {
+    type:Sequelize.STRING(50),
+    allowNull: false
+  },
   Phone: Sequelize.STRING(50),
-  Username: Sequelize.STRING(50),
-  Password: Sequelize.STRING(50),
-  Level: Sequelize.INTEGER,
+  Username: {
+    type:Sequelize.STRING(50),
+    allowNull: true
+  },
+  Password: {
+    type:Sequelize.TEXT,
+    allowNull: false
+  },
+  Level: {
+    type:Sequelize.INTEGER,
+    allowNull: false
+  },
   User_ID: {
     type: Sequelize.INTEGER,
     field: 'User ID',
