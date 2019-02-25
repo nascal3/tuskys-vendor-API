@@ -38,15 +38,21 @@ router.get('/login', async (req, res) => {
     }
   });
 
-  if (!userData) return res.status(400).json({'Error': 'Wrong username or Password is wrong'});
+  if (!userData) return res.status(400).json({'Error': 'Wrong username or Password'});
+
+  // SALT THE PASSWORD AND INSERT NEW USER INTO DB
+  // const salt = await bcrypt.genSalt(10);
+  // const salted_password = await bcrypt.hash(password, salt);
+  // console.log('>>>',salted_password);
 
   // check password validity
-  const validPassword = await bcrypt.compare(password, userData.password);
-  if (!validPassword) return res.status(400).json({'Error': 'Wrong username or Password is wrong'});
+  const validPassword = await bcrypt.compare(password, userData.Password);
+  if (!validPassword) return res.status(400).json({'Error': 'Wrong username or Password'});
 
   // generate user tokens
   const token = generateToken(userData.User_ID, userData.Vendor_No, userData.Fullname, userData.Email, userData.Phone, userData.Level );
 
+  userData.Password = undefined;
   // set authorisation header
   return res.header('Authorization', token).status(200).json({'user':userData, 'token': token});
 
