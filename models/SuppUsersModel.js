@@ -2,10 +2,6 @@ const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 
 const suppUsersModel = sequelize.define('Supplier_Users', {
-  timestamp: {
-    type: 'TIMESTAMP',
-    allowNull: false
-  },
   Vendor_No: {
     type:Sequelize.STRING(50),
     field: 'Vendor No',
