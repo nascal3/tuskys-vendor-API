@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const generateToken = require('../models/usersTokenGen');
+const auth = require('../middleware/auth');
 const SuppUsers = require('../models/SuppUsersModel');
 require('express-async-errors');
 
-/* GET users listing. */
-router.get('/list/:page', async (req, res) => {
+/* GET A LIST OF ALL USERS. */
+router.get('/list/:page', auth, async (req, res) => {
 
   let limit = 50;   // number of records per page
   let offset;
@@ -18,7 +19,7 @@ router.get('/list/:page', async (req, res) => {
   offset = limit * (page - 1);
 
   const users = await SuppUsers.findAll({
-    attributes: {exclude: ['timestamp']},
+    attributes: {exclude: ['Password']},
     limit: limit,
     offset: offset
   });
