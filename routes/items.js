@@ -10,7 +10,11 @@ require('express-async-errors');
 router.get('/:page', auth, async (req, res) => {
 
   let limit = 50;   // number of records per page
+  let pages = 0;
   let offset;
+
+  const data = await ItemModel.findAndCountAll();
+  pages = Math.ceil(data.count / limit);
 
   let page = parseInt(req.params.page);      // page number
   page <= 0 ? page = 1 : page = parseInt(req.params.page);
@@ -22,7 +26,7 @@ router.get('/:page', auth, async (req, res) => {
     offset: offset
   });
 
-  res.status(200).json({'result': items});
+  res.status(200).json({'result': items, 'pages': pages});
 });
 
 // FUNCTION - GET TRANSACTIONS FOR SPECIFIC ITEM NUMBER
