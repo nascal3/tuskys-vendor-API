@@ -1,4 +1,6 @@
 const express = require('express');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const router = express.Router();
 const storage = require('node-persist');
 const auth = require('../middleware/auth');
@@ -30,7 +32,7 @@ router.get('/:page', auth, async (req, res) => {
 });
 
 // FUNCTION - GET TRANSACTIONS FOR SPECIFIC ITEM NUMBER
-const getTrans = async (itemNum, page) => {
+const getTrans = async (itemNum, page, fromDate, toDate) => {
 
   await storage.init(); // initialize state storage
 
@@ -43,7 +45,13 @@ const getTrans = async (itemNum, page) => {
   if (await storage.getItem('ItemNumber') === undefined) {
     // --> create storage & set item number & pages into storage
     data = await TransSalesEntryModel.findAndCountAll({
-      where: {Item_No: itemNum}
+      where: {
+        Item_No: itemNum,
+        Date: {
+          [Op.gte]: fromDate,
+          [Op.lte]: toDate
+        }
+      }
     });
     pages = Math.ceil(data.count / limit);
     await storage.setItem('ItemNumber',itemNum);
@@ -52,7 +60,13 @@ const getTrans = async (itemNum, page) => {
   } else if (await storage.getItem('ItemNumber') !== itemNum) {
     // --> set item number & pages into storage if different item is requested
     data = await TransSalesEntryModel.findAndCountAll({
-      where: {Item_No: itemNum}
+      where: {
+        Item_No: itemNum,
+        Date: {
+          [Op.gte]: fromDate,
+          [Op.lte]: toDate
+        }
+      }
     });
 
     pages = Math.ceil(data.count / limit);
@@ -66,7 +80,13 @@ const getTrans = async (itemNum, page) => {
 
   let trans = await TransSalesEntryModel.findAll({
     attributes: {exclude: ['timestamp']},
-    where: {Item_No: itemNum},
+    where: {
+      Item_No: itemNum,
+      Date: {
+        [Op.gte]: fromDate,
+        [Op.lte]: toDate
+      }
+    },
     limit: limit,
     offset: offset
   });
@@ -81,12 +101,15 @@ router.get('/item/:itemNum/:page', auth, async (req, res) => {
   let itemNumber = req.params.itemNum;
   let pageNumber = req.params.page;
 
+  let fromDate = req.body.fromDate;
+  let toDate = req.body.toDate;
+
   const item = await ItemModel.findOne({
     where: { No: itemNumber },
     attributes: {exclude: ['timestamp']}
   });
 
-  let sales = await getTrans(itemNumber, pageNumber);
+  let sales = await getTrans(itemNumber, pageNumber, fromDate, toDate);
 
   res.status(200).json({'item': item, 'transactions': sales.transactions, 'pages': sales.pages});
 });
