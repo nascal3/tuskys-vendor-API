@@ -41,25 +41,20 @@ router.get('/vendor/:vnum/:page', auth, async (req, res) => {
   let pages = 0 || await storage.getItem('itemNumOfPages');
   let offset;
 
-  let data = [];
+  const data = async () => {
+    const res = await ItemModel.findAndCountAll({
+      where: {
+        Vendor_No: vendorNum
+      }
+    });
+    pages = Math.ceil(res.count / limit);
+    await storage.setItem('itemNumOfPages', pages);
+    await storage.setItem('venNum', vendorNum);
+  };
   if (await storage.getItem('venNum') === undefined) {
-    data = await ItemModel.findAndCountAll({
-      where: {
-        Vendor_No: vendorNum
-      }
-    });
-    pages = Math.ceil(data.count / limit);
-    await storage.setItem('itemNumOfPages', pages);
-    await storage.setItem('venNum', vendorNum);
+    await data();
   } else if (await storage.getItem('venNum') !== vendorNum) {
-    data = await ItemModel.findAndCountAll({
-      where: {
-        Vendor_No: vendorNum
-      }
-    });
-    pages = Math.ceil(data.count / limit);
-    await storage.setItem('itemNumOfPages', pages);
-    await storage.setItem('venNum', vendorNum);
+    await data();
   }
 
   let page = parseInt(req.params.page);      // page number
