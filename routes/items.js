@@ -31,6 +31,53 @@ router.get('/:page', auth, async (req, res) => {
   res.status(200).json({'result': items, 'pages': pages});
 });
 
+// GET ALL ITEMS BY SPECIFIC VENDOR
+router.get('/vendor/:vnum/:page', auth, async (req, res) => {
+
+  await storage.init(); // initialize state storage
+  let vendorNum = req.params.vnum;
+
+  let limit = 50;   // number of records per page
+  let pages = 0 || await storage.getItem('itemNumOfPages');
+  let offset;
+
+  let data = [];
+  if (await storage.getItem('venNum') === undefined) {
+    data = await ItemModel.findAndCountAll({
+      where: {
+        Vendor_No: vendorNum
+      }
+    });
+    pages = Math.ceil(data.count / limit);
+    await storage.setItem('itemNumOfPages', pages);
+    await storage.setItem('venNum', vendorNum);
+  } else if (await storage.getItem('venNum') !== vendorNum) {
+    data = await ItemModel.findAndCountAll({
+      where: {
+        Vendor_No: vendorNum
+      }
+    });
+    pages = Math.ceil(data.count / limit);
+    await storage.setItem('itemNumOfPages', pages);
+    await storage.setItem('venNum', vendorNum);
+  }
+
+  let page = parseInt(req.params.page);      // page number
+  page <= 0 ? page = 1 : page = parseInt(req.params.page);
+  offset = limit * (page - 1);
+
+  const items = await ItemModel.findAll({
+    attributes: {exclude: ['timestamp']},
+    where: {
+      Vendor_No: vendorNum
+    },
+    limit: limit,
+    offset: offset
+  });
+
+  res.status(200).json({'result': items, 'pages': pages});
+});
+
 // FUNCTION - GET TRANSACTIONS FOR SPECIFIC ITEM NUMBER
 const getTrans = async (itemNum, page, fromDate, toDate) => {
 
