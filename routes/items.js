@@ -80,40 +80,29 @@ const getTrans = async (itemNum, page, fromDate, toDate) => {
 
   let limit = 50;   // number of records per page
   let offset;
-  let pages = 0 || await storage.getItem('numOfPages');
+  let pages = 0 || await storage.getItem('transNumOfPages');
 
   // count all the records from DB
-  let data = [];
+  const data = async () => {
+      const res = await TransSalesEntryModel.findAndCountAll({
+          where: {
+              Item_No: itemNum,
+              Date: {
+                  [Op.gte]: fromDate,
+                  [Op.lte]: toDate
+              }
+          }
+      });
+      pages = Math.ceil(res.count / limit);
+      await storage.setItem('ItemNumber',itemNum);
+      await storage.setItem('transNumOfPages',pages);
+  };
   if (await storage.getItem('ItemNumber') === undefined) {
     // --> create storage & set item number & pages into storage
-    data = await TransSalesEntryModel.findAndCountAll({
-      where: {
-        Item_No: itemNum,
-        Date: {
-          [Op.gte]: fromDate,
-          [Op.lte]: toDate
-        }
-      }
-    });
-    pages = Math.ceil(data.count / limit);
-    await storage.setItem('ItemNumber',itemNum);
-    await storage.setItem('numOfPages',pages);
-
+    await data();
   } else if (await storage.getItem('ItemNumber') !== itemNum) {
     // --> set item number & pages into storage if different item is requested
-    data = await TransSalesEntryModel.findAndCountAll({
-      where: {
-        Item_No: itemNum,
-        Date: {
-          [Op.gte]: fromDate,
-          [Op.lte]: toDate
-        }
-      }
-    });
-
-    pages = Math.ceil(data.count / limit);
-    await storage.setItem('ItemNumber',itemNum);
-    await storage.setItem('numOfPages',pages);
+    await data();
   }
 
   let pageNum = parseInt(page);      // page number
