@@ -65,10 +65,25 @@ router.get('/vendor/:vnum/:page', auth, async (req, res) => {
 // FUNCTION - GET TRANSACTIONS FOR SPECIFIC ITEM NUMBER
 const getTrans = async (itemNum, page, fromDate, toDate) => {
 
+  console.log('RRR',fromDate, toDate);
+
+  if (toDate === null || toDate === undefined) {
+    toDate = new Date();
+    console.log('toDate',toDate);
+  }
+
+  if (fromDate === null || fromDate === undefined) {
+    let currentDate = new Date();
+    fromDate = new Date(currentDate.setMonth(currentDate.getMonth() - 12));
+    console.log('fromDate',fromDate);
+  }
+
+
   let limit = 50;   // number of records per page
   let offset;
   let pages = 0;
 
+  console.log('RR2',fromDate, toDate);
   // count all the records from DB
   const data = await TransSalesEntryModel.findAndCountAll({
       where: {
