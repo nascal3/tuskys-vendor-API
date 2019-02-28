@@ -2,7 +2,6 @@ const express = require('express');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const router = express.Router();
-const storage = require('node-persist');
 const auth = require('../middleware/auth');
 const ItemModel = require('../models/ItemModel');
 const TransSalesEntryModel = require('../models/TransSalesEntryModel');
@@ -34,28 +33,18 @@ router.get('/:page', auth, async (req, res) => {
 // GET ALL ITEMS BY SPECIFIC VENDOR
 router.get('/vendor/:vnum/:page', auth, async (req, res) => {
 
-  await storage.init(); // initialize state storage
   let vendorNum = req.params.vnum;
 
   let limit = 50;   // number of records per page
-  let pages = 0 || await storage.getItem('itemNumOfPages');
+  let pages = 0;
   let offset;
 
-  const data = async () => {
-    const res = await ItemModel.findAndCountAll({
-      where: {
-        Vendor_No: vendorNum
-      }
-    });
-    pages = Math.ceil(res.count / limit);
-    await storage.setItem('itemNumOfPages', pages);
-    await storage.setItem('venNum', vendorNum);
-  };
-  if (await storage.getItem('venNum') === undefined) {
-    await data();
-  } else if (await storage.getItem('venNum') !== vendorNum) {
-    await data();
-  }
+  const data = await ItemModel.findAndCountAll({
+    where: {
+      Vendor_No: vendorNum
+    }
+  });
+  pages = Math.ceil(data.count / limit);
 
   let page = parseInt(req.params.page);      // page number
   page <= 0 ? page = 1 : page = parseInt(req.params.page);
@@ -76,34 +65,21 @@ router.get('/vendor/:vnum/:page', auth, async (req, res) => {
 // FUNCTION - GET TRANSACTIONS FOR SPECIFIC ITEM NUMBER
 const getTrans = async (itemNum, page, fromDate, toDate) => {
 
-  await storage.init(); // initialize state storage
-
   let limit = 50;   // number of records per page
   let offset;
-  let pages = 0 || await storage.getItem('transNumOfPages');
+  let pages = 0;
 
   // count all the records from DB
-  const data = async () => {
-      const res = await TransSalesEntryModel.findAndCountAll({
-          where: {
-              Item_No: itemNum,
-              Date: {
-                  [Op.gte]: fromDate,
-                  [Op.lte]: toDate
-              }
+  const data = await TransSalesEntryModel.findAndCountAll({
+      where: {
+          Item_No: itemNum,
+          Date: {
+              [Op.gte]: fromDate,
+              [Op.lte]: toDate
           }
-      });
-      pages = Math.ceil(res.count / limit);
-      await storage.setItem('ItemNumber',itemNum);
-      await storage.setItem('transNumOfPages',pages);
-  };
-  if (await storage.getItem('ItemNumber') === undefined) {
-    // --> create storage & set item number & pages into storage
-    await data();
-  } else if (await storage.getItem('ItemNumber') !== itemNum) {
-    // --> set item number & pages into storage if different item is requested
-    await data();
-  }
+      }
+  });
+  pages = Math.ceil(data.count / limit);
 
   let pageNum = parseInt(page);      // page number
   pageNum <= 0 ? pageNum = 1 : pageNum = parseInt(page);
