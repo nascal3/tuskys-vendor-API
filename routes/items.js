@@ -133,7 +133,7 @@ router.get('/item/:itemNum/:page', auth, async (req, res) => {
 
   let sales = await getTrans(itemNumber, pageNumber, fromDate, toDate);
 
-  res.status(200).json({'item': item, 'transactions': sales.transactions, 'pages': sales.pages});
+  res.status(200).json({'item': item, 'transactions': sales.transactions, 'currentPage': pageNumber, 'pages': sales.pages});
 });
 
 module.exports = router;
