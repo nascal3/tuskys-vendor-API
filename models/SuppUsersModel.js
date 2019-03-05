@@ -2,10 +2,15 @@ const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 
 const suppUsersModel = sequelize.define('Supplier_Users', {
+  User_ID: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   Vendor_No: {
     type:Sequelize.STRING(50),
     field: 'Vendor No',
-    allowNull: false
+    allowNull: true
   },
   Fullname: {
     type:Sequelize.STRING(50),
@@ -18,7 +23,7 @@ const suppUsersModel = sequelize.define('Supplier_Users', {
   Phone: Sequelize.STRING(50),
   Username: {
     type:Sequelize.STRING(50),
-    allowNull: true
+    allowNull: false
   },
   Password: {
     type:Sequelize.TEXT,
@@ -28,14 +33,14 @@ const suppUsersModel = sequelize.define('Supplier_Users', {
     type:Sequelize.INTEGER,
     allowNull: false
   },
-  User_ID: {
-    type: Sequelize.INTEGER,
-    field: 'User ID',
-    primaryKey: true,
-    allowNull: false
+  StartDate: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
   },
-  StartDate: Sequelize.DATEONLY,
-  EndDate: Sequelize.DATEONLY,
+  EndDate: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  }
 }, {
   schema: 'dbo',
   tableName: 'Supplier_Users',
