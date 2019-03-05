@@ -8,10 +8,13 @@ require('express-async-errors');
 router.get('/list/:page', auth, async (req, res) => {
 
   let limit = 50;   // number of records per page
+  let pageNumber = req.params.page;
   let offset;
 
+  const data = await Vendor.findAndCountAll();
   let page = parseInt(req.params.page);      // page number
   page <= 0 ? page = 1 : page = parseInt(req.params.page);
+  let pages = Math.ceil(data.count / limit);
   offset = limit * (page - 1);
 
   const vendors = await Vendor.findAll({
@@ -20,7 +23,7 @@ router.get('/list/:page', auth, async (req, res) => {
     offset: offset
   });
 
-  res.status(200).json({'result': vendors});
+  res.status(200).json({'result': vendors, 'currentPage': pageNumber, 'pages': pages});
 });
 
 // GET ALL VENDOR BY VENDOR NUMBER

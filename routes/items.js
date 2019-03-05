@@ -13,6 +13,7 @@ router.get('/:page', auth, async (req, res) => {
   let limit = 50;   // number of records per page
   let pages = 0;
   let offset;
+  let pageNumber = req.params.page;
 
   const data = await ItemModel.findAndCountAll();
   pages = Math.ceil(data.count / limit);
@@ -27,13 +28,14 @@ router.get('/:page', auth, async (req, res) => {
     offset: offset
   });
 
-  res.status(200).json({'result': items, 'pages': pages});
+  res.status(200).json({'result': items, 'currentPage': pageNumber, 'pages': pages});
 });
 
 // GET ALL ITEMS BY SPECIFIC VENDOR
 router.get('/vendor/:vnum/:page', auth, async (req, res) => {
 
   let vendorNum = req.params.vnum;
+  let pageNumber = req.params.page;
 
   let limit = 50;   // number of records per page
   let pages = 0;
@@ -59,7 +61,7 @@ router.get('/vendor/:vnum/:page', auth, async (req, res) => {
     offset: offset
   });
 
-  res.status(200).json({'result': items, 'pages': pages});
+  res.status(200).json({'result': items, 'currentPage': pageNumber, 'pages': pages});
 });
 
 // FUNCTION - GET TRANSACTIONS FOR SPECIFIC ITEM NUMBER

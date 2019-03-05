@@ -11,6 +11,7 @@ router.get('/list/:page', auth, async (req, res) => {
 
   let limit = 50;   // number of records per page
   let offset;
+  let pageNumber = req.params.page;
 
   const data = await SuppUsers.findAndCountAll();
   let page = parseInt(req.params.page);      // page number
@@ -24,7 +25,7 @@ router.get('/list/:page', auth, async (req, res) => {
     offset: offset
   });
 
-  res.status(200).json({'result': users, 'count': data.count, 'pages': pages});
+  res.status(200).json({'result': users, 'currentPage': pageNumber, 'pages': pages});
 });
 
 // LOGIN USERS PROCESS

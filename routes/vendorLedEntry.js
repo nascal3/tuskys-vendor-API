@@ -8,6 +8,7 @@ require('express-async-errors');
 router.get('/:venNum/:page', auth, async (req, res) => {
 
   let vendorNum = req.params.venNum;
+  let pageNumber = req.params.page;
 
   let limit = 50;   // number of records per page
   let pages = 0;
@@ -39,7 +40,7 @@ router.get('/:venNum/:page', auth, async (req, res) => {
     offset: offset
   });
 
-  res.status(200).json({'result': vendorLedger, 'pages': pages});
+  res.status(200).json({'result': vendorLedger, 'currentPage': pageNumber, 'pages': pages});
 });
 
 module.exports = router;
