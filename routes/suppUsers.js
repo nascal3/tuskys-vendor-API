@@ -42,11 +42,6 @@ router.post('/login', async (req, res) => {
 
   if (!userData) return res.status(400).json({'Error': 'Wrong username or Password'});
 
-  // SALT THE PASSWORD AND INSERT NEW USER INTO DB
-  // const salt = await bcrypt.genSalt(10);
-  // const salted_password = await bcrypt.hash(password, salt);
-  // console.log('>>>',salted_password);
-
   // check password validity
   const validPassword = await bcrypt.compare(password, userData.Password);
   if (!validPassword) return res.status(400).json({'Error': 'Wrong username or Password'});
@@ -54,7 +49,66 @@ router.post('/login', async (req, res) => {
   // generate user tokens
   const token = generateToken(userData.User_ID, userData.Vendor_No, userData.Fullname, userData.Email, userData.Phone, userData.Level );
 
+  // remove password data from json results
   userData.Password = undefined;
+
+  // set authorisation header
+  return res.header('Authorization', token).status(200).json({'user':userData, 'token': token});
+
+});
+
+// REGISTER NEW USERS PROCESS
+router.post('/register', async (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  let fullname = req.body.fullname;
+  let phone = req.body.phone;
+  let vendorNum = req.body.vendornum;
+  let level = req.body.level;
+
+  if (level === undefined) level = 1;
+
+  const userEmail = await SuppUsers.findOne({
+    attributes: {exclude: ['timestamp']},
+    where: {
+      Email: username
+    }
+  });
+
+  if (userEmail !== null) return res.status(400).json({'Error': 'The following Email/Username already exists!'});
+
+  // validate vendor number if vendor number already exists
+  if (vendorNum)  {
+    const vendor = await SuppUsers.findOne({
+      attributes: {exclude: ['timestamp']},
+      where: {
+        Vendor_No: vendorNum
+      }
+    });
+
+    if (vendor !== null) return res.status(400).json({'Error': 'The following vendor number already exists!'});
+  }
+
+  // SALT THE PASSWORD AND INSERT NEW USER INTO DB
+  const salt = await bcrypt.genSalt(10);
+  const salted_password = await bcrypt.hash(password, salt);
+
+  const userData = await SuppUsers.create({
+    Vendor_No: vendorNum,
+    Fullname: fullname,
+    Email: username,
+    Phone: phone,
+    Username: username,
+    Password: salted_password,
+    Level: level
+  });
+
+  //generate User token
+  const token = generateToken(userData.User_ID, userData.Vendor_No, userData.Fullname, userData.Email, userData.Phone, userData.Level );
+
+  // remove password data from json results
+  userData.Password = undefined;
+
   // set authorisation header
   return res.header('Authorization', token).status(200).json({'user':userData, 'token': token});
 
