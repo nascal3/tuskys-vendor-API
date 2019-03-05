@@ -67,8 +67,6 @@ router.get('/vendor/:vnum/:page', auth, async (req, res) => {
 // FUNCTION - GET TRANSACTIONS FOR SPECIFIC ITEM NUMBER
 const getTrans = async (itemNum, page, fromDate, toDate) => {
 
-  console.log('RRR',fromDate, toDate);
-
   if (toDate === null || toDate === undefined) {
     toDate = new Date();
     console.log('toDate',toDate);
@@ -76,7 +74,7 @@ const getTrans = async (itemNum, page, fromDate, toDate) => {
 
   if (fromDate === null || fromDate === undefined) {
     let currentDate = new Date();
-    fromDate = new Date(currentDate.setMonth(currentDate.getMonth() - 12));
+    fromDate = new Date(currentDate.setMonth(currentDate.getMonth() - 1));
     console.log('fromDate',fromDate);
   }
 

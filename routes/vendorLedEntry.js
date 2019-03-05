@@ -1,14 +1,29 @@
 const express = require('express');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const auth = require('../middleware/auth');
 const router = express.Router();
 const VendorLedEntry = require('../models/VendorLedgEntryModel');
 require('express-async-errors');
 
-// GET ALL VENDORS LEDGERS FOR SPECIFIC VENDOR
+// GET ALL VENDORS LEDGERS FOR SPECIFIC VENDOR BETWEEN SPECIFIC DATES
 router.get('/:venNum/:page', auth, async (req, res) => {
 
   let vendorNum = req.params.venNum;
   let pageNumber = req.params.page;
+  let fromDate = req.body.fromDate;
+  let toDate = req.body.toDate;
+
+  if (toDate === null || toDate === undefined) {
+    toDate = new Date();
+    console.log('toDate',toDate);
+  }
+
+  if (fromDate === null || fromDate === undefined) {
+    let currentDate = new Date();
+    fromDate = new Date(currentDate.setMonth(currentDate.getMonth() - 1));
+    console.log('fromDate',fromDate);
+  }
 
   let limit = 50;   // number of records per page
   let pages = 0;
@@ -34,7 +49,11 @@ router.get('/:venNum/:page', auth, async (req, res) => {
       exclude: ['timestamp']
     },
     where: {
-      Vendor_No: vendorNum
+      Vendor_No: vendorNum,
+      Posting_Date: {
+        [Op.gte]: fromDate,
+        [Op.lte]: toDate
+      }
     },
     limit: limit,
     offset: offset
