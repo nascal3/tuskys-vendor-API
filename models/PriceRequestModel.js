@@ -9,10 +9,9 @@ const priceRequestModel = sequelize.define('Price_Request', {
   },
   Vendor_No: {
     type:Sequelize.STRING(50),
-    primaryKey: true,
     allowNull: false
   },
-  Fullname: {
+  Name: {
     type:Sequelize.STRING(50),
     allowNull: false
   },
