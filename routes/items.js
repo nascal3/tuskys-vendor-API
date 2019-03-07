@@ -69,21 +69,17 @@ const getTrans = async (itemNum, page, fromDate, toDate) => {
 
   if (toDate === null || toDate === undefined) {
     toDate = new Date();
-    console.log('toDate',toDate);
   }
 
   if (fromDate === null || fromDate === undefined) {
     let currentDate = new Date();
     fromDate = new Date(currentDate.setMonth(currentDate.getMonth() - 1));
-    console.log('fromDate',fromDate);
   }
-
 
   let limit = 50;   // number of records per page
   let offset;
   let pages = 0;
 
-  console.log('RR2',fromDate, toDate);
   // count all the records from DB
   const data = await TransSalesEntryModel.findAndCountAll({
       where: {
@@ -113,7 +109,7 @@ const getTrans = async (itemNum, page, fromDate, toDate) => {
     offset: offset
   });
 
-  return { 'transactions': trans, 'pages': pages}
+  return { 'transactions': trans, 'count': data.count,  'pages': pages}
 
 };
 
@@ -133,7 +129,7 @@ router.get('/item/:itemNum/:page', auth, async (req, res) => {
 
   let sales = await getTrans(itemNumber, pageNumber, fromDate, toDate);
 
-  res.status(200).json({'item': item, 'transactions': sales.transactions, 'currentPage': pageNumber, 'pages': sales.pages});
+  res.status(200).json({'item': item, 'transactions': sales.transactions,'transactionsCount': sales.count, 'currentPage': pageNumber, 'pages': sales.pages});
 });
 
 module.exports = router;
