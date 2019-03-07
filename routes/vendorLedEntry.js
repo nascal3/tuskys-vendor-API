@@ -7,9 +7,11 @@ const VendorLedEntry = require('../models/VendorLedgEntryModel');
 require('express-async-errors');
 
 // GET ALL VENDORS LEDGERS FOR SPECIFIC VENDOR BETWEEN SPECIFIC DATES
-router.get('/:venNum/:page', auth, async (req, res) => {
+router.get('/:page', auth, async (req, res) => {
 
-  let vendorNum = req.params.venNum;
+  // === get vendor number from token in header ===
+  let vendorNum = req.user.vendorNo;
+
   let pageNumber = req.params.page;
   let fromDate = req.body.fromDate;
   let toDate = req.body.toDate;

@@ -8,7 +8,7 @@ require('express-async-errors');
 router.post('/change/req', auth, async (req, res) => {
 
   const priceChange = await PriceRequest.create({
-    Vendor_No: req.body.vendorNum,
+    Vendor_No: req.user.vendorNo,
     Name: req.body.name,
     Item: req.body.item,
     Item_No: req.body.itemNum,
@@ -24,7 +24,8 @@ router.post('/approve/req', auth, async (req, res) => {
     const priceChange = await PriceRequest.update(
         {
            Approval_Status: req.body.status,
-           Approved_By: req.body.name
+           Approved_By: req.user.fullName,
+           Approval_Date: new Date()
         },
         {
           where: {

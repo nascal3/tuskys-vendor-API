@@ -32,9 +32,11 @@ router.get('/:page', auth, async (req, res) => {
 });
 
 // GET ALL ITEMS BY SPECIFIC VENDOR
-router.get('/vendor/:vnum/:page', auth, async (req, res) => {
+router.get('/vendor/:page', auth, async (req, res) => {
 
-  let vendorNum = req.params.vnum;
+  // === get vendor number from token in header ===
+  let vendorNum = req.user.vendorNo;
+
   let pageNumber = req.params.page;
 
   let limit = 50;   // number of records per page
