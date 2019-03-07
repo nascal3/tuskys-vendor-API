@@ -114,4 +114,39 @@ router.post('/register', async (req, res) => {
 
 });
 
+// REGISTERED USERS CHANGE THEIR ACCOUNT INFO
+router.post('/account', auth, async (req, res) => {
+
+  const userChange = await SuppUsers.update(
+      {
+        Email: req.body.email,
+        Phone: req.body.phone
+      },
+      {
+        where: {
+          Vendor_No: req.body.venNum
+        }
+      }
+  );
+
+  res.status(200).json({'result': userChange});
+});
+
+// SYSTEM ADMINS CHANGE USERS ACCESS LEVEL INFO
+router.post('/setting', auth, async (req, res) => {
+
+  const userChange = await SuppUsers.update(
+      {
+        Level: req.body.level
+      },
+      {
+        where: {
+          Vendor_No: req.body.venNum
+        }
+      }
+  );
+
+  res.status(200).json({'result': userChange});
+});
+
 module.exports = router;
