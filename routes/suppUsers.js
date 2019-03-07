@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
   const userData = await SuppUsers.findOne({
     attributes: {exclude: ['timestamp']},
     where: {
-      Email: username
+      Username: username
     }
   });
 
@@ -124,7 +124,7 @@ router.post('/account', auth, async (req, res) => {
       },
       {
         where: {
-          Vendor_No: req.body.venNum
+          Username: req.body.username
         }
       }
   );
@@ -133,7 +133,7 @@ router.post('/account', auth, async (req, res) => {
 });
 
 // SYSTEM ADMINS CHANGE USERS ACCESS LEVEL INFO
-router.post('/setting', auth, async (req, res) => {
+router.post('/settings', auth, async (req, res) => {
 
   const userChange = await SuppUsers.update(
       {
@@ -141,7 +141,7 @@ router.post('/setting', auth, async (req, res) => {
       },
       {
         where: {
-          Vendor_No: req.body.venNum
+          Username: req.body.username
         }
       }
   );
