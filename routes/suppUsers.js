@@ -40,14 +40,21 @@ router.post('/login', async (req, res) => {
     }
   });
 
-  if (!userData) return res.status(400).json({'Error': 'Wrong username or Password'});
+  if (!userData) return res.status(400).json({'Error': 'Wrong Username or Password'});
 
   // check password validity
   const validPassword = await bcrypt.compare(password, userData.Password);
-  if (!validPassword) return res.status(400).json({'Error': 'Wrong username or Password'});
+  if (!validPassword) return res.status(400).json({'Error': 'Wrong Username or Password'});
 
   // generate user tokens
-  const token = generateToken(userData.User_ID, userData.Vendor_No, userData.Fullname, userData.Email, userData.Phone, userData.Level );
+  const token = generateToken(
+      userData.User_ID,
+      userData.Vendor_No,
+      userData.Fullname,
+      userData.Email,
+      userData.Phone,
+      userData.Level
+  );
 
   // remove password data from json results
   userData.Password = undefined;
@@ -117,6 +124,9 @@ router.post('/register', async (req, res) => {
 // REGISTERED USERS CHANGE THEIR ACCOUNT INFO
 router.post('/account', auth, async (req, res) => {
 
+  // === get username from token in header ===
+  let userID = req.user.id;
+
   const userChange = await SuppUsers.update(
       {
         Email: req.body.email,
@@ -124,12 +134,51 @@ router.post('/account', auth, async (req, res) => {
       },
       {
         where: {
-          Username: req.body.username
+          User_ID: userID
         }
       }
   );
 
   res.status(200).json({'result': userChange});
+});
+
+// USERS CHANGE THEIR PASSWORD
+router.post('/change/password', auth, async (req, res) => {
+
+  // === get username from token in header ===
+  let userID = req.user.id;
+
+  let newPassword = req.body.newPassword;
+  let oldPassword = req.body.oldPassword;
+
+  const userData = await SuppUsers.findOne({
+    attributes: {exclude: ['timestamp']},
+    where: {
+      User_ID: userID
+    }
+  });
+
+  // check user password validity
+  const validPassword = await bcrypt.compare(oldPassword, userData.Password);
+  if (!validPassword) return res.status(400).json({'Error': 'Wrong current Password'});
+
+  // SALT THE NEW PASSWORD AND INSERT NEW USER INTO DB
+  const salt = await bcrypt.genSalt(10);
+  const salted_password = await bcrypt.hash(newPassword, salt);
+
+  const userChange = await SuppUsers.update(
+      {
+        Password: salted_password
+      },
+      {
+        where: {
+          User_ID: userID
+        }
+      }
+  );
+
+  res.status(200).json({'result': userChange});
+
 });
 
 // SYSTEM ADMINS CHANGE USERS ACCESS LEVEL INFO
