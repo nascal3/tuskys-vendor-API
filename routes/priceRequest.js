@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const sysAdmin = require('../middleware/sysAdmin');
 const PriceRequest = require('../models/PriceRequestModel');
 require('express-async-errors');
 
@@ -19,7 +20,7 @@ router.post('/change/req', auth, async (req, res) => {
 });
 
 // APPROVE PRICE CHANGE REQUEST
-router.post('/approve/req', auth, async (req, res) => {
+router.post('/approve/req', [auth, sysAdmin], async (req, res) => {
 
     const priceChange = await PriceRequest.update(
         {
