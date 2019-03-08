@@ -3,12 +3,13 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const router = express.Router();
 const auth = require('../middleware/auth');
+const sysAdmin = require('../middleware/sysAdmin');
 const ItemModel = require('../models/ItemModel');
 const TransSalesEntryModel = require('../models/TransSalesEntryModel');
 require('express-async-errors');
 
 // GET ALL ITEMS
-router.get('/:page', auth, async (req, res) => {
+router.get('/:page', [auth, sysAdmin], async (req, res) => {
 
   let limit = 50;   // number of records per page
   let pages = 0;

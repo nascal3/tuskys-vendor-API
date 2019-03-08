@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const sysAdmin = require('../middleware/sysAdmin');
 const Vendor = require('../models/VendorModel');
 require('express-async-errors');
 
 // GET ALL VENDORS
-router.get('/list/:page', auth, async (req, res) => {
+router.get('/list/:page', [auth, sysAdmin], async (req, res) => {
 
   let limit = 50;   // number of records per page
   let pageNumber = req.params.page;

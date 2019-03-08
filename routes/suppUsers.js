@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const generateToken = require('../models/usersTokenGen');
 const auth = require('../middleware/auth');
+const sysAdmin = require('../middleware/sysAdmin');
 const SuppUsers = require('../models/SuppUsersModel');
 require('express-async-errors');
 
@@ -217,7 +218,7 @@ router.post('/reset/password', async (req, res) => {
 });
 
 // SYSTEM ADMINS CHANGE USERS ACCESS LEVEL INFO
-router.post('/settings', auth, async (req, res) => {
+router.post('/settings', [auth, sysAdmin], async (req, res) => {
 
   const userChange = await SuppUsers.update(
       {
