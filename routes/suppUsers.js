@@ -181,6 +181,41 @@ router.post('/change/password', auth, async (req, res) => {
 
 });
 
+// RESET/CHANGE USERS PASSWORD
+router.post('/reset/password', async (req, res) => {
+
+    let username = req.body.username;
+    let newPassword = "123456";
+
+    const userData = await SuppUsers.findOne({
+        attributes: {exclude: ['timestamp']},
+        where: {
+            Username: username
+        }
+    });
+
+    // check if user exists
+    if (!userData) return res.status(400).json({'Error': 'The following  user does not exist!'});
+
+    // SALT THE NEW PASSWORD AND INSERT NEW USER INTO DB
+    const salt = await bcrypt.genSalt(10);
+    const salted_password = await bcrypt.hash(newPassword, salt);
+
+    const userChange = await SuppUsers.update(
+        {
+            Password: salted_password
+        },
+        {
+            where: {
+                Username: username
+            }
+        }
+    );
+
+    res.status(200).json({'result': userChange});
+
+});
+
 // SYSTEM ADMINS CHANGE USERS ACCESS LEVEL INFO
 router.post('/settings', auth, async (req, res) => {
 
